@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+// Defines a message type that represents the data structure to be sent from the server to the client.
+message InformationMessage {
+  string id = 1;         // Unique identifier for the message
+  string from = 2;       // Sender of the message
+  string to = 3;         // Receiver of the message
+  string text = 4;       // The content of the message
+  string timestamp = 5;  // Timestamp of when the message was sent (e.g., ISO 8601 string)
+}
+
+// Defines a gRPC service with a streaming RPC method.
+service MessageService {
+  // The client calls this RPC to receive a continuous stream of InformationMessages from the server.
+  rpc StreamMessages(Empty) returns (stream InformationMessage);
+}
+
+// Defines an empty message used as a placeholder for methods that don't require any input parameters.
+message Empty {}
